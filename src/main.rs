@@ -1,3 +1,4 @@
+use itertools::{Itertools};
 #[warn(unused_imports)]
 
 use rand::Rng;
@@ -5,11 +6,23 @@ use rand::Rng;
 
 fn main() {
     let mut rng = rand::thread_rng();
-    // let range = Uniform::new(0, 10.0);
-    // range.
-    // let values: Vec<f64> = (0..100).map(|_| rng.sample(&range)).collect();
-    let values = [(); 100].map(|_| rng.gen_range(0.0..1.0));
-    // let values: Vec<f64> = rand::thread_rng().sample_iter(&range).take(100).collect();
+    let values: [f64; 500] = std::array::from_fn(|_| rng.gen_range(0.0..1.0));
+    let mut sorted_lower = values.clone();
+    sorted_lower.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    let sorted_upper = sorted_lower.clone().into_iter().rev().collect_vec();
 
-    println!("{:?}", values);
+    // println!("{:?}", values);
+    // println!("{:?}", sorted_lower);
+    // println!("{:?}", sorted_upper);
+
+    // now sum them each way
+    let summed_lower = sorted_lower.into_iter().reduce(|a, b| a + b).unwrap();
+    let summed_upper = sorted_upper.into_iter().reduce(|a, b| a + b).unwrap();
+
+    println!("{}", summed_lower);
+    println!("{}", summed_upper);
+
+    // delta
+    println!("{}", summed_lower - summed_upper);
+
 }
