@@ -16,8 +16,8 @@ fn main() {
     // println!("{:?}", sorted_upper);
 
     // now sum them each way
-    let summed_lower = sorted_lower.into_iter().reduce(|a, b| a + b).unwrap();
-    let summed_upper = sorted_upper.into_iter().reduce(|a, b| a + b).unwrap();
+    let summed_lower = sorted_lower.into_iter().fold(0.0, |a, b| a + b);
+    let summed_upper = sorted_upper.into_iter().fold(0.0, |a, b| a + b) ;
 
     println!("{}", summed_lower);
     println!("{}", summed_upper);
